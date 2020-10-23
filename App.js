@@ -1,51 +1,148 @@
 import React from 'react';
+import { SectionList } from 'react-native';
 import styled from 'styled-components/native';
+import { Ionicons } from '@expo/vector-icons';
+
+import { Appointment, SectionTitle } from './components';
+
+const DATA = [
+  {
+    title: '12 октября',
+    data: [
+      {
+        active: true,
+        time: '15:30',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Василий Пупкин',
+          avatar:
+            'https://sun5-3.userapi.com/impg/feg-pK-1eEUq5X-FUurm3-aMka3Gt7JSBJ-bQQ/JFJW8rB6ABM.jpg?size=50x0&quality=88&crop=216,221,654,654&sign=ed3b66ca325763668cada5ad116d4e65&ava=1',
+        },
+      },
+      {
+        time: '15:00',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Евгений Баж',
+          avatar:
+            'https://sun5-3.userapi.com/impf/c831309/v831309490/19ec77/OKPLUpaEJY4.jpg?size=50x0&quality=88&crop=189,189,1121,1121&sign=31ed12025116af06eab6bff476e9a371&ava=1',
+        },
+      },
+      {
+        active: true,
+        time: '15:30',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Василий Пупкин',
+          avatar:
+            'https://sun5-3.userapi.com/impg/feg-pK-1eEUq5X-FUurm3-aMka3Gt7JSBJ-bQQ/JFJW8rB6ABM.jpg?size=50x0&quality=88&crop=216,221,654,654&sign=ed3b66ca325763668cada5ad116d4e65&ava=1',
+        },
+      },
+      {
+        time: '15:00',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Евгений Баж',
+          avatar:
+            'https://sun5-3.userapi.com/impf/c831309/v831309490/19ec77/OKPLUpaEJY4.jpg?size=50x0&quality=88&crop=189,189,1121,1121&sign=31ed12025116af06eab6bff476e9a371&ava=1',
+        },
+      },
+    ],
+  },
+  {
+    title: '13 октября',
+    data: [
+      {
+        time: '15:30',
+        diagnosis: 'удаение зуба мудрости',
+        user: {
+          fullName: 'Василий Пупкин',
+          avatar:
+            'https://sun5-3.userapi.com/impg/feg-pK-1eEUq5X-FUurm3-aMka3Gt7JSBJ-bQQ/JFJW8rB6ABM.jpg?size=50x0&quality=88&crop=216,221,654,654&sign=ed3b66ca325763668cada5ad116d4e65&ava=1',
+        },
+      },
+      {
+        time: '15:00',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Евгений Баж',
+          avatar:
+            'https://sun5-3.userapi.com/impf/c831309/v831309490/19ec77/OKPLUpaEJY4.jpg?size=50x0&quality=88&crop=189,189,1121,1121&sign=31ed12025116af06eab6bff476e9a371&ava=1',
+        },
+      },
+      {
+        time: '15:30',
+        diagnosis: 'удаение зуба мудрости',
+        user: {
+          fullName: 'Василий Пупкин',
+          avatar:
+            'https://sun5-3.userapi.com/impg/feg-pK-1eEUq5X-FUurm3-aMka3Gt7JSBJ-bQQ/JFJW8rB6ABM.jpg?size=50x0&quality=88&crop=216,221,654,654&sign=ed3b66ca325763668cada5ad116d4e65&ava=1',
+        },
+      },
+      {
+        time: '15:00',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Евгений Баж',
+          avatar:
+            'https://sun5-3.userapi.com/impf/c831309/v831309490/19ec77/OKPLUpaEJY4.jpg?size=50x0&quality=88&crop=189,189,1121,1121&sign=31ed12025116af06eab6bff476e9a371&ava=1',
+        },
+      },
+      {
+        time: '15:30',
+        diagnosis: 'удаение зуба мудрости',
+        user: {
+          fullName: 'Василий Пупкин',
+          avatar:
+            'https://sun5-3.userapi.com/impg/feg-pK-1eEUq5X-FUurm3-aMka3Gt7JSBJ-bQQ/JFJW8rB6ABM.jpg?size=50x0&quality=88&crop=216,221,654,654&sign=ed3b66ca325763668cada5ad116d4e65&ava=1',
+        },
+      },
+      {
+        time: '15:00',
+        diagnosis: 'пульпит',
+        user: {
+          fullName: 'Евгений Баж',
+          avatar:
+            'https://sun5-3.userapi.com/impf/c831309/v831309490/19ec77/OKPLUpaEJY4.jpg?size=50x0&quality=88&crop=189,189,1121,1121&sign=31ed12025116af06eab6bff476e9a371&ava=1',
+        },
+      },
+    ],
+  },
+];
 
 export default function App() {
   return (
     <Container>
-      <Group>
-        <GroupTitle>11 сентября</GroupTitle>
-        <GroupItem>
-          <Avatar
-            source={{
-              uri:
-                'https://sun9-74.userapi.com/impf/c630827/v630827898/47fd0/MICCqD5vt3E.jpg?size=100x0&quality=88&crop=0,0,960,960&sign=e3e88d13ea3d61cf3d06f3b786363f48&ava=1',
-            }}
-          />
-          <FullName>Юлия Рощина</FullName>
-        </GroupItem>
-      </Group>
+      <SectionList
+        sections={DATA}
+        keyExtractor={(item, index) => index}
+        renderItem={({ item }) => <Appointment {...item} />}
+        renderSectionHeader={({ section: { title } }) => <SectionTitle>{title}</SectionTitle>}
+      />
+      <PlusButton>
+        <Ionicons name="ios-add" size={36} color="white" />
+      </PlusButton>
     </Container>
   );
 }
 
-const FullName = styled.Text`
-  font-weight: 600;
-  font-size: 16px;
-  color: #000000;
-`;
-
-const Avatar = styled.Image`
+const PlusButton = styled.TouchableOpacity`
+  align-items: center;
+  justify-content: center;
   border-radius: 50px;
-  width: 40px;
-  height: 40px;
-`;
-const GroupItem = styled.Text`
-  padding: 20px 0;
-`;
-
-const GroupTitle = styled.Text`
-  font-weight: 800;
-  font-size: 22px;
-  color: #000000;
-`;
-
-const Group = styled.View`
-  padding: 0 20px;
+  width: 64px;
+  height: 64px;
+  background: #2a86ff;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  shadow-color: #2a86ff;
+  shadow-opacity: 0.7;
+  shadow-radius: 3.5px;
+  elevation: 5;
 `;
 
 const Container = styled.View`
   flex: 1;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
