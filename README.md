@@ -1,5 +1,4 @@
-# react-native-dental-app
-Журнал пациентов стоматологии на react native
+# Журнал пациентов стоматологии на react native
 
 <h3>
 Сборка и запуск</h3>
