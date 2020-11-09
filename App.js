@@ -9,12 +9,12 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="AddAppointment">
         <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{
-            title: 'Пациенты',
+            title: 'Журнал приёмов',
             headerTintColor: '#2A86FF',
             headerStyle: {
               elevation: 0.8,

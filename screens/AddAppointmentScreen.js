@@ -2,10 +2,11 @@ import React from 'react';
 import { Item, Input, Label, Picker, Icon } from 'native-base';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
+import { Text } from 'react-native';
+import DatePicker from 'react-native-datepicker';
 
 import { appointmentsApi } from '../utils/api';
 import { Button, Container } from '../components';
-import { Text } from 'react-native';
 
 const AddAppointmentScreen = ({ navigation }) => {
   const [values, setValues] = React.useState({});
@@ -66,22 +67,41 @@ const AddAppointmentScreen = ({ navigation }) => {
           style={{ marginTop: 11 }}
         />
       </Item>
-      <Item style={{ marginTop: 20, marginLeft: 0 }} floatingLabel>
-        <DatePicker
-          defaultDate={new Date(2018, 4, 4)}
-          minimumDate={new Date(2018, 1, 1)}
-          maximumDate={new Date(2018, 12, 31)}
-          locale={'en'}
-          timeZoneOffsetInMinutes={undefined}
-          modalTransparent={false}
-          animationType={'fade'}
-          androidMode={'default'}
-          placeHolderText="Select date"
-          textStyle={{ color: 'green' }}
-          placeHolderTextStyle={{ color: '#d3d3d3' }}
-          onDateChange={this.setDate}
-          disabled={false}
-        />
+      <Item style={{ marginTop: 20, marginLeft: 0 }}>
+        <TimeRow>
+          <DatePicker
+            style={{ width: '50%' }}
+            date={new Date()}
+            mode="date"
+            placeholder="Дата"
+            format="YYYY-MM-DD"
+            minDate={new Date()}
+            confirmBtnText="Сохранить"
+            cancelBtnText="Отмена"
+            showIcon={false}
+            customStyles={{
+              dateInput: {
+                borderWidth: 0,
+              },
+            }}
+          />
+          <DatePicker
+            style={{ width: '50%' }}
+            date={new Date()}
+            mode="time"
+            placeholder="Время"
+            format="HH:MM"
+            minDate={new Date()}
+            confirmBtnText="Сохранить"
+            cancelBtnText="Отмена"
+            showIcon={false}
+            customStyles={{
+              dateInput: {
+                borderWidth: 0,
+              },
+            }}
+          />
+        </TimeRow>
       </Item>
       <ButtonView>
         <Button onPress={onSubmit} color="#87CC6F">
@@ -92,6 +112,10 @@ const AddAppointmentScreen = ({ navigation }) => {
     </Container>
   );
 };
+
+const TimeRow = styled.View`
+  flex-direction: row;
+`;
 
 const ButtonView = styled.View`
   flex: 1;
