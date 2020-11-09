@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add axios
+  C:\Program Files\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add native-base
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\;C:\Users\Юля\AppData\Local\Microsoft\WindowsApps;C:\Users\Юля\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Юля\AppData\Local\Yarn\bin;C:\Users\Юля\AppData\Local\GitHubDesktop\bin;C:\Users\Юля\AppData\Local\Microsoft\WindowsApps;C:\Users\Юля\AppData\Roaming\npm
@@ -30,7 +30,9 @@ npm manifest:
       "@react-native-community/masked-view": "^0.1.10",
       "@react-navigation/native": "^5.7.6",
       "@react-navigation/stack": "^5.9.3",
+      "axios": "^0.21.0",
       "expo": "~39.0.2",
+      "expo-constants": "^9.2.0",
       "expo-status-bar": "~1.0.2",
       "react": "16.13.1",
       "react-dom": "16.13.1",
@@ -39,6 +41,7 @@ npm manifest:
       "react-native-reanimated": "^1.13.1",
       "react-native-safe-area-context": "3.1.4",
       "react-native-screens": "~2.10.1",
+      "react-native-swipeable-row": "^0.8.1",
       "react-native-web": "~0.13.12",
       "react-navigation-stack": "react-navigation/stack",
       "styled-components": "^5.2.0"
@@ -1658,6 +1661,13 @@ Lockfile:
     dependencies:
       array-filter "^1.0.0"
   
+  axios@^0.21.0:
+    version "0.21.0"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.0.tgz#26df088803a2350dff2c27f96fef99fe49442aca"
+    integrity sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==
+    dependencies:
+      follow-redirects "^1.10.0"
+  
   babel-plugin-dynamic-import-node@^2.3.3:
     version "2.3.3"
     resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz#84fda19c976ec5c6defef57f9427b3def66e17a3"
@@ -2569,7 +2579,7 @@ Lockfile:
       path-browserify "^1.0.0"
       url-parse "^1.4.4"
   
-  expo-constants@~9.2.0:
+  expo-constants@^9.2.0, expo-constants@~9.2.0:
     version "9.2.0"
     resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.2.0.tgz#e86a38793deaff9018878afac65bce2543c80a4c"
     integrity sha512-WKwiEMvBgPrEPEyZKm21UUB2KWQux9OCWf6ZDORLTln7kO3rsbaJEprfWUWTP7AxyaLMYfN+/0WFHjZc25SZWQ==
@@ -2883,6 +2893,11 @@ Lockfile:
     dependencies:
       locate-path "^5.0.0"
       path-exists "^4.0.0"
+  
+  follow-redirects@^1.10.0:
+    version "1.13.0"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
+    integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
   
   fontfaceobserver@^2.1.0:
     version "2.1.0"
@@ -4630,7 +4645,7 @@ Lockfile:
     dependencies:
       asap "~2.0.6"
   
-  prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+  prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4730,6 +4745,13 @@ Lockfile:
     version "2.10.1"
     resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.10.1.tgz#06d22fae87ef0ce51c616c34a199726db1403b95"
     integrity sha512-Z2kKSk4AwWRQNCBmTjViuBQK0/Lx0jc25TZptn/2gKYUCOuVRvCekoA26u0Tsb3BIQ8tWDsZW14OwDlFUXW1aw==
+  
+  react-native-swipeable-row@^0.8.1:
+    version "0.8.1"
+    resolved "https://registry.yarnpkg.com/react-native-swipeable-row/-/react-native-swipeable-row-0.8.1.tgz#6076ab2568c36cd96bc73882470598cfac3b20c9"
+    integrity sha512-DMarMMIPihwIyOlYtym2VwzCUvciDefrb38JEMHvHXUwoKhWGQgfYoBi1csYYHeg/AawBr1Oel2W1rowV4ixUA==
+    dependencies:
+      prop-types "^15.5.10"
   
   react-native-web@~0.13.12:
     version "0.13.18"

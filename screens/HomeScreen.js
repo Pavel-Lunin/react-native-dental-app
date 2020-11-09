@@ -1,51 +1,96 @@
 import React from 'react';
-import { SectionList } from 'react-native';
+import { Alert, SectionList, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
-import axios from 'axios';
+import Swipeable from 'react-native-swipeable-row';
+import { appointmentsApi } from '../utils/api';
 
-import { Appointment, SectionTitle } from '../components';
+import { Appointment, SectionTitle, PlusButton } from '../components';
 
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    axios.get('https://trycode.pw/c/S3ZND.json').then(({ data }) => {
-      setData(data);
-    });
-  }, []);
+  const fetchAppointents = () => {
+    setIsLoading(true);
+    appointmentsApi
+      .get()
+      .then(({ data }) => {
+        setData(data.data);
+        setIsLoading(false);
+      })
+      .catch((e) => setIsLoading(false));
+  };
+
+  React.useEffect(fetchAppointents, []);
+
+  const removeAppointent = (id) => {
+    Alert.alert(
+      'Удалить приём',
+      'Вы действительно хотите удалить приём?',
+      [
+        {
+          text: 'Отмена',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Удалить',
+          onPress: () => {
+            setIsLoading(true);
+            appointmentsApi
+              .remove(id)
+              .then(() => {
+                fetchAppointents();
+              })
+              .catch(() => {
+                setIsLoading(false);
+              });
+          },
+        },
+      ],
+      { cancelable: false },
+    );
+  };
 
   return (
     <Container>
       {data && (
         <SectionList
           sections={data}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item }) => <Appointment navigate={navigation.navigate} item={item} />}
+          keyExtractor={(item) => item._id}
+          onRefresh={fetchAppointents}
+          refreshing={isLoading}
+          renderItem={({ item }) => (
+            <Swipeable
+              rightButtons={[
+                <SwipeViewButton style={{ backgroundColor: '#84C1CB' }}>
+                  <Ionicons name="md-create" size={28} color="white" />
+                </SwipeViewButton>,
+                <SwipeViewButton
+                  onPress={removeAppointent.bind(this, item._id)}
+                  style={{ backgroundColor: '#F85A5A' }}>
+                  <Ionicons name="ios-close" size={48} color="white" />
+                </SwipeViewButton>,
+              ]}>
+              <Appointment navigate={navigation.navigate} item={item} />
+            </Swipeable>
+          )}
           renderSectionHeader={({ section: { title } }) => <SectionTitle>{title}</SectionTitle>}
         />
       )}
-      <PlusButton>
+      <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')}>
         <Ionicons name="ios-add" size={36} color="white" />
       </PlusButton>
     </Container>
   );
 };
 
-const PlusButton = styled.TouchableOpacity`
-  align-items: center;
+const SwipeViewButton = styled.TouchableOpacity`
+  width: 75px;
+  height: 100%;
   justify-content: center;
-  border-radius: 50px;
-  width: 64px;
-  height: 64px;
-  background: #2a86ff;
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-  shadow-color: #2a86ff;
-  shadow-opacity: 0.7;
-  shadow-radius: 3.5px;
-  elevation: 4;
+  align-items: center;
 `;
 
 const Container = styled.View`
