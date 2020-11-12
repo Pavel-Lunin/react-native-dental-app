@@ -1,12 +1,12 @@
 import React from 'react';
-import { Item, Input, Label, Picker, Icon } from 'native-base';
+import { Item, Input, Label, Picker, Icon, View } from 'native-base';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
-import { Text } from 'react-native';
-import DatePicker from 'react-native-datepicker';
+import { Text, TouchableOpacity } from 'react-native';
 
 import { appointmentsApi } from '../utils/api';
 import { Button, Container } from '../components';
+import DatePicker from 'react-native-datepicker';
 
 const AddAppointmentScreen = ({ navigation }) => {
   const [values, setValues] = React.useState({});
@@ -19,6 +19,11 @@ const AddAppointmentScreen = ({ navigation }) => {
     });
   };
 
+  const handleInputChange = (name, e) => {
+    const text = e.nativeEvent.text;
+    setFieldValue(name, text);
+  };
+
   const onSubmit = () => {
     appointmentsApi
       .add(values)
@@ -29,6 +34,13 @@ const AddAppointmentScreen = ({ navigation }) => {
       .catch((e) => {
         alert('BAD');
       });
+  };
+
+  const setFieldValue = (name, value) => {
+    setValues({
+      ...values,
+      [name]: value,
+    });
   };
 
   return (
@@ -69,40 +81,62 @@ const AddAppointmentScreen = ({ navigation }) => {
       </Item>
       <Item style={{ marginTop: 20, marginLeft: 0 }}>
         <TimeRow>
-          <DatePicker
-            style={{ width: '50%' }}
-            date={new Date()}
-            mode="date"
-            placeholder="Дата"
-            format="YYYY-MM-DD"
-            minDate={new Date()}
-            confirmBtnText="Сохранить"
-            cancelBtnText="Отмена"
-            showIcon={false}
-            customStyles={{
-              dateInput: {
-                borderWidth: 0,
-              },
-            }}
-          />
-          <DatePicker
-            style={{ width: '50%' }}
-            date={new Date()}
-            mode="time"
-            placeholder="Время"
-            format="HH:MM"
-            minDate={new Date()}
-            confirmBtnText="Сохранить"
-            cancelBtnText="Отмена"
-            showIcon={false}
-            customStyles={{
-              dateInput: {
-                borderWidth: 0,
-              },
-            }}
-          />
+          <View style={{ flex: 1 }}>
+            <DatePicker
+              date={new Date()}
+              mode="date"
+              placeholder="Дата"
+              format="YYYY-MM-DD"
+              minDate={new Date()}
+              confirmBtnText="Сохранить"
+              cancelBtnText="Отмена"
+              showIcon={false}
+              customStyles={{
+                dateInput: {
+                  borderWidth: 0,
+                },
+                dateText: {
+                  fontSize: 18,
+                },
+              }}
+              date={values.date}
+              onDateChange={setFieldValue.bind(this, 'date')}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <DatePicker
+              mode="time"
+              placeholder="Время"
+              format="HH:mm"
+              minDate={new Date()}
+              confirmBtnText="Сохранить"
+              cancelBtnText="Отмена"
+              showIcon={false}
+              customStyles={{
+                dateInput: {
+                  borderWidth: 0,
+                },
+                dateText: {
+                  fontSize: 18,
+                },
+              }}
+              date={values.time}
+              onDateChange={setFieldValue.bind(this, 'time')}
+            />
+          </View>
         </TimeRow>
       </Item>
+      {/*<Item style={{ marginTop: 20, marginLeft: 0 }}>
+        <TimeRow>
+          <TouchableOpacity title="Show Date Picker" onPress={showDatePicker} />
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        </TimeRow>
+      </Item>*/}
       <ButtonView>
         <Button onPress={onSubmit} color="#87CC6F">
           <AntDesign name="plus" size={15} color="white" />
