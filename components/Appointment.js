@@ -21,7 +21,7 @@ const Appointment = ({ navigate, item }) => {
         <FullName>{patient.fullname}</FullName>
         <GrayText>{diagnosis}</GrayText>
       </View>
-      <Badge active={active}>{time}</Badge>
+      {time && <Badge active={active}>{time}</Badge>}
     </GroupItem>
   );
 };

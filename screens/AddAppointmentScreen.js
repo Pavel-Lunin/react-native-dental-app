@@ -1,21 +1,39 @@
 import React from 'react';
-import { Item, Input, Label, Picker, Icon, View } from 'native-base';
+import { Item, Input, Label, Picker, Icon } from 'native-base';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
+import moment from 'moment';
+import 'moment/locale/ru';
 
 import { appointmentsApi } from '../utils/api';
 import { Button, Container } from '../components';
-import DatePicker from 'react-native-datepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
-const AddAppointmentScreen = ({ navigation }) => {
-  const [values, setValues] = React.useState({});
+const AddAppointmentScreen = ({ route, navigation }) => {
+  const { patientId } = route.params;
 
-  const handleChange = (name, e) => {
-    const text = e.nativeEvent.text;
+  const [values, setValues] = React.useState({
+    diagnosis: 'пульпит',
+    dentNumber: '',
+    price: '',
+    date: null,
+    time: null,
+    patient: patientId,
+  });
+
+  const fieldsName = {
+    diagnosis: 'Диагноз',
+    dentNumber: 'Номер зуба',
+    price: 'Цена',
+    date: 'Дата',
+    time: 'Время',
+  };
+
+  const setFieldValue = (name, value) => {
     setValues({
       ...values,
-      [name]: text,
+      [name]: value,
     });
   };
 
@@ -28,19 +46,47 @@ const AddAppointmentScreen = ({ navigation }) => {
     appointmentsApi
       .add(values)
       .then(() => {
-        navigation.navigate('Home');
-        alert('OK');
+        navigation.navigate('Home', { lastUpdate: new Date() });
       })
       .catch((e) => {
-        alert('BAD');
+        if (e.response.data && e.response.data.message) {
+          e.response.data.message.forEach((err) => {
+            const fieldName = err.param;
+            alert(`Ошибка! Поле "${fieldsName[fieldName]}" указано неверно.`);
+          });
+        }
       });
   };
 
-  const setFieldValue = (name, value) => {
-    setValues({
-      ...values,
-      [name]: value,
-    });
+  const [date, setDate] = React.useState(new Date());
+  const [mode, setMode] = React.useState('date');
+  const [show, setShow] = React.useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    setFieldValue(
+      mode == 'date' ? 'date' : 'time',
+      mode == 'time' ? date.toTimeString().slice(0, 5) : moment(date).format('yyyy-MM-DD'),
+    );
+  };
+
+  React.useEffect(() => {
+    onChange();
+  }, [date]);
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
   };
 
   return (
@@ -48,11 +94,20 @@ const AddAppointmentScreen = ({ navigation }) => {
       <Item style={{ marginLeft: 0 }} floatingLabel>
         <Label>Номер зуба</Label>
         <Input
-          onChange={handleChange.bind(this, 'dentNumber')}
+          onChange={handleInputChange.bind(this, 'dentNumber')}
           value={values.fullname}
           style={{ marginTop: 11 }}
           keyboardType="numeric"
           autoFocus
+        />
+      </Item>
+      <Item style={{ marginTop: 20, marginLeft: 0 }} floatingLabel>
+        <Label>Цена</Label>
+        <Input
+          onChange={handleInputChange.bind(this, 'price')}
+          value={values.phone}
+          keyboardType="numeric"
+          style={{ marginTop: 11 }}
         />
       </Item>
       <Item style={{ marginTop: 20, marginLeft: 0 }}>
@@ -60,83 +115,71 @@ const AddAppointmentScreen = ({ navigation }) => {
           mode="dropdown"
           iosIcon={<Icon name="arrow-down" />}
           placeholder="Выберите диагноз"
-          placeholderStyle={{ color: '#bfc6ea' }}
+          placeholderStyle={{
+            color: '#bfc6ea',
+            fontSize: 18,
+          }}
           placeholderIconColor="#007aff"
-          style={{ width: '100%' }}>
-          <Picker.Item label="пульпит" value="key0" />
-          <Picker.Item label="удаление зуба" value="key1" />
-          <Picker.Item label="чистка" value="key2" />
-          <Picker.Item label="пломбирование" value="key3" />
-          <Picker.Item label="протезирование" value="key4" />
+          style={{
+            width: '100%',
+            fontSize: 18,
+          }}
+          onValueChange={setFieldValue.bind(this, 'diagnosis')}
+          selectedValue={values.diagnosis}>
+          <Picker.Item label="пульпит" value="пульпит" />
+          <Picker.Item label="удаление зуба" value="удаление зуба" />
+          <Picker.Item label="чистка" value="чистка" />
+          <Picker.Item label="пломбирование" value="пломбирование" />
+          <Picker.Item label="протезирование" value="протезирование" />
         </Picker>
-      </Item>
-      <Item style={{ marginTop: 20, marginLeft: 0 }} floatingLabel>
-        <Label>Цена</Label>
-        <Input
-          onChange={handleChange.bind(this, 'price')}
-          value={values.phone}
-          keyboardType="numeric"
-          style={{ marginTop: 11 }}
-        />
       </Item>
       <Item style={{ marginTop: 20, marginLeft: 0 }}>
         <TimeRow>
           <View style={{ flex: 1 }}>
-            <DatePicker
-              date={new Date()}
-              mode="date"
+            <Button color={'transparent'} onPress={showDatepicker}>
+              <Text
+                style={{
+                  color: '#000000',
+                  fontSize: 16,
+                }}>
+                {date.toLocaleDateString()}
+              </Text>
+            </Button>
+          </View>
+          {show && (
+            <RNDateTimePicker
+              value={date}
+              mode={mode}
               placeholder="Дата"
-              format="YYYY-MM-DD"
-              minDate={new Date()}
-              confirmBtnText="Сохранить"
-              cancelBtnText="Отмена"
-              showIcon={false}
-              customStyles={{
-                dateInput: {
-                  borderWidth: 0,
-                },
-                dateText: {
-                  fontSize: 18,
-                },
-              }}
-              date={values.date}
-              onDateChange={setFieldValue.bind(this, 'date')}
+              is24Hour={true}
+              display="default"
+              minimumDate={new Date()}
+              onChange={(setFieldValue.bind(this, { mode }), onChange)}
             />
-          </View>
+          )}
           <View style={{ flex: 1 }}>
-            <DatePicker
-              mode="time"
-              placeholder="Время"
-              format="HH:mm"
-              minDate={new Date()}
-              confirmBtnText="Сохранить"
-              cancelBtnText="Отмена"
-              showIcon={false}
-              customStyles={{
-                dateInput: {
-                  borderWidth: 0,
-                },
-                dateText: {
-                  fontSize: 18,
-                },
-              }}
-              date={values.time}
-              onDateChange={setFieldValue.bind(this, 'time')}
-            />
+            <Button color={'transparent'} onPress={showTimepicker}>
+              <Text
+                style={{
+                  color: '#000000',
+                  fontSize: 16,
+                }}>
+                {date.toTimeString().slice(0, 5)}
+              </Text>
+            </Button>
           </View>
+          {show && (
+            <RNDateTimePicker
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              minimumDate={new Date()}
+              onChange={(setFieldValue.bind(this, { mode }), onChange)}
+            />
+          )}
         </TimeRow>
       </Item>
-      {/*<Item style={{ marginTop: 20, marginLeft: 0 }}>
-        <TimeRow>
-          <TouchableOpacity title="Show Date Picker" onPress={showDatePicker} />
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-          />
-        </TimeRow>
-      </Item>*/}
       <ButtonView>
         <Button onPress={onSubmit} color="#87CC6F">
           <AntDesign name="plus" size={15} color="white" />

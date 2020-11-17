@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @response-native-community/datetimepicker
+  C:\Program Files\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @react-native-community/datetimepicker@3.0.0
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Git\cmd;C:\Program Files\;C:\Users\Юля\AppData\Local\Microsoft\WindowsApps;C:\Users\Юля\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Юля\AppData\Local\Yarn\bin;C:\Users\Юля\AppData\Local\GitHubDesktop\bin;C:\Users\Юля\AppData\Local\Microsoft\WindowsApps;C:\Users\Юля\AppData\Roaming\npm
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@response-native-community%2fdatetimepicker: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1327:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Юля\Desktop\progr\react-native-dental-app\node_modules\@babel\helper-compilation-targets\node_modules\.bin'
 
 npm manifest: 
   {
@@ -51,6 +41,7 @@ npm manifest:
       "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
       "react-native-datepicker": "^1.7.2",
       "react-native-gesture-handler": "~1.7.0",
+      "react-native-modal-datetime-picker": "^9.1.0",
       "react-native-reanimated": "^1.13.1",
       "react-native-safe-area-context": "3.1.4",
       "react-native-screens": "~2.10.1",
@@ -4985,6 +4976,13 @@ Lockfile:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.0.tgz#84fd13e6b89cc3aa4daa80ec514bf15cb724d86d"
     integrity sha512-+/bcZWFeZt0xSS/+3CHM5K7qPL4vDO/3ARLIowzFpUPGZiPsv9+NET+XNqqseRYwFJwYMmtX+Q4TZKxAVy09ew==
+  
+  react-native-modal-datetime-picker@^9.1.0:
+    version "9.1.0"
+    resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-9.1.0.tgz#a1286efa6d9c456e931805fd0687cf9e916af6ed"
+    integrity sha512-KwZEduMvfxp1BMQ2nMOckJCpR5Wiw+GIBazqtWm6zptNTL+iQyeYQeyjIubsMGWh4MkMueActSRWMvHut98h/Q==
+    dependencies:
+      prop-types "^15.7.2"
   
   react-native-reanimated@^1.13.1:
     version "1.13.1"

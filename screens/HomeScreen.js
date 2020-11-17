@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, SectionList, Text } from 'react-native';
+import { Alert, SectionList } from 'react-native';
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable-row';
@@ -7,9 +7,11 @@ import { appointmentsApi } from '../utils/api';
 
 import { Appointment, SectionTitle, PlusButton } from '../components';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ route, navigation }) => {
+  const { params } = route;
   const [data, setData] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [lastUpdateTime, setLastUpdateTime] = React.useState(null);
 
   const fetchAppointents = () => {
     setIsLoading(true);
@@ -17,12 +19,13 @@ const HomeScreen = ({ navigation }) => {
       .get()
       .then(({ data }) => {
         setData(data.data);
-        setIsLoading(false);
       })
-      .catch((e) => setIsLoading(false));
+      .finally((e) => setIsLoading(false));
   };
 
   React.useEffect(fetchAppointents, []);
+
+  React.useEffect(fetchAppointents, [params]);
 
   const removeAppointent = (id) => {
     Alert.alert(

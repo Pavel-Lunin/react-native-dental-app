@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, FontAwesome, AntDesign, Ionicons } from '@expo/
 import { Text, View, ActivityIndicator, Linking } from 'react-native';
 
 import { GrayText, Button, Badge, Container, PlusButton } from '../components';
-import { patientsApi } from '../utils/api';
+import { patientsApi, phoneFormat } from '../utils';
 
 const PatientScreen = ({ route, navigation }) => {
   const [appointments, setAppointments] = React.useState([]);
@@ -28,7 +28,7 @@ const PatientScreen = ({ route, navigation }) => {
     <View style={{ flex: 1 }}>
       <PatientDetails>
         <PatientFullname>{patient.fullname}</PatientFullname>
-        <GrayText>{patient.phone}</GrayText>
+        <GrayText>{phoneFormat(patient.phone)}</GrayText>
 
         <PatientButtons>
           <FormulaButtonView>
@@ -74,7 +74,9 @@ const PatientScreen = ({ route, navigation }) => {
           )}
         </Container>
       </PatientAppointments>
-      <PlusButton onPress={navigation.navigate.bind(this, 'AddAppointment')} />
+      <PlusButton
+        onPress={navigation.navigate.bind(this, 'AddAppointment', { patientId: patient._id })}
+      />
     </View>
   );
 };

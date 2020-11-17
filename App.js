@@ -1,26 +1,43 @@
+import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity, View } from 'react-native';
 
-import { HomeScreen, PatientScreen, AddPatientScreen, AddAppointmentScreen } from './screens';
+import {
+  HomeScreen,
+  PatientScreen,
+  AddPatientScreen,
+  AddAppointmentScreen,
+  PatientsScreen,
+} from './screens';
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="AddAppointment">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
+          options={({ navigation, route }) => ({
             title: 'Журнал приёмов',
             headerTintColor: '#2A86FF',
+            headerRight: (props) => (
+              <View>
+                <TouchableOpacity
+                  onPress={navigation.navigate.bind(this, 'Patients')}
+                  style={{ marginRight: 25 }}>
+                  <Ionicons name="md-people" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+            ),
             headerStyle: {
               elevation: 0.8,
               shadowOpacity: 0.8,
             },
-          }}
+          })}
         />
         <Stack.Screen
           name="Patient"
@@ -51,6 +68,18 @@ function App() {
           component={AddAppointmentScreen}
           options={{
             title: 'Добавить приём',
+            headerTintColor: '#2A86FF',
+            headerStyle: {
+              elevation: 0.8,
+              shadowOpacity: 0.8,
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Patients"
+          component={PatientsScreen}
+          options={{
+            title: 'Пациенты',
             headerTintColor: '#2A86FF',
             headerStyle: {
               elevation: 0.8,

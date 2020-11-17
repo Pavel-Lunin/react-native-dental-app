@@ -23,7 +23,7 @@ const AddPatientScreen = ({ navigation }) => {
       .add(values)
       .then(() => {
         navigation.navigate('Home');
-        alert('OK');
+        alert('Пациент добавлен');
       })
       .catch((e) => {
         alert('BAD');
