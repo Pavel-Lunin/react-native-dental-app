@@ -5,7 +5,7 @@
 
 Перед запуском установите зависимости командой <b>yarn install</b> или <b>npm install</b>
 
-Клонируйте [<h3>серверную часть</h3> для мобильного приложения](https://github.com/Pavel-Lunin/dental-app-backend)  
+Клонируйте [серверную часть для мобильного приложения](https://github.com/Pavel-Lunin/dental-app-backend)  
 Установите зависимости, те ми же командами <b>yarn install</b> или <b>npm install</b>,
 
 <h3>Для запуска приложения</h3>
