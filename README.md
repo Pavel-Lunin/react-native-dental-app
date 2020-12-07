@@ -6,7 +6,10 @@
 Перед запуском установите зависимости командой <b>yarn install</b> или <b>npm install</b>
 
 Клонируйте [серверную часть для мобильного приложения](https://github.com/Pavel-Lunin/dental-app-backend)  
-Установите зависимости, те ми же командами <b>yarn install</b> или <b>npm install</b>,
+Установите зависимости, те ми же командами <b>yarn install</b> или <b>npm install</b>.
+
+<h3>Запустите сервер</h3>
+Используйте команду  <b>yarn start</b> или <b>npm start</b> либо <b>expo start</b>.
 
 <h3>Для запуска приложения</h3>
 
